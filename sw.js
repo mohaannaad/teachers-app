@@ -1,6 +1,6 @@
 /* Service worker: makes the app installable and usable offline.
    Stale-while-revalidate: serve from cache instantly, refresh in background. */
-const CACHE = 'teachers-app-v1';
+const CACHE = 'teachers-app-v2';
 const SHELL = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 

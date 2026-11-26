@@ -146,9 +146,23 @@
     if (!on || !ind) return;
     const nav = $('#bnav').getBoundingClientRect();
     const r = on.getBoundingClientRect();
-    ind.style.transform = `translateX(${r.left - nav.left + r.width / 2 - 9}px)`;
+    ind.style.transform = app.classList.contains('wide')
+      ? `translateY(${r.top - nav.top + r.height / 2 - 9}px)`   // side rail (tablet / landscape)
+      : `translateX(${r.left - nav.left + r.width / 2 - 9}px)`; // bottom bar (phone portrait)
   }
-  window.addEventListener('resize', moveNavIndicator);
+
+  /* Responsive classes from the app's own size (works inside the desktop frame too) */
+  function updateLayout() {
+    const w = app.clientWidth, h = app.clientHeight;
+    app.classList.toggle('wide', w >= 600);
+    app.classList.toggle('xwide', w >= 900);
+    app.classList.toggle('short', w > h && h < 500);
+    requestAnimationFrame(moveNavIndicator);
+  }
+  updateLayout();
+  if ('ResizeObserver' in window) new ResizeObserver(updateLayout).observe(app);
+  window.addEventListener('resize', updateLayout);
+  window.addEventListener('orientationchange', () => setTimeout(updateLayout, 150));
 
   /* ---------------- Splash → Login ---------------- */
   setTopTone('splash');

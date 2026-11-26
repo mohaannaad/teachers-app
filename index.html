@@ -16,6 +16,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    /* Desktop-only phone frame for previews. Touch devices (phones, tablets, APK WebView) get the real layout. ?full disables the frame. */
+    (function () {
+      var mq = window.matchMedia('(min-width: 600px) and (hover: hover) and (pointer: fine)');
+      var off = /[?&]full\b/.test(location.search);
+      var set = function () { document.documentElement.classList.toggle('framed', mq.matches && !off); };
+      set(); mq.addEventListener ? mq.addEventListener('change', set) : mq.addListener(set);
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -149,7 +158,7 @@
           </button>
         </header>
 
-        <div class="tab-scroll">
+        <div class="tab-scroll home-grid">
           <!-- Membership card (flip) -->
           <div class="mcard-wrap reveal" style="--i:0">
             <div class="mcard" id="mcard">
